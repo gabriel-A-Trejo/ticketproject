@@ -54,3 +54,5 @@ next-env.d.ts
 *.ts
 *.mts
 *.m2ts
+
+/src/generated/prisma

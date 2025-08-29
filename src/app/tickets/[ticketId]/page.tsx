@@ -1,18 +1,17 @@
-import Placeholder from '@/components/Placeholder';
-import { initialTickets } from '@/data';
+import { notFound } from 'next/navigation';
+
 import TicketItem from '@/features/ticket/components/ticketItem';
+import getTicket from '@/features/ticket/queries/getTicket';
 
 type TicketPageProps = {
-  params: Promise<{ ticketId: string }>;
+  params: { ticketId: string };
 };
 
 const TicketPage = async ({ params }: TicketPageProps) => {
-  const { ticketId } = await params;
-
-  const ticket = initialTickets.find(ticket => ticket.id === ticketId);
+  const ticket = await getTicket(params.ticketId);
 
   if (!ticket) {
-    return <Placeholder label="Ticket not found" />;
+    notFound();
   }
 
   return (

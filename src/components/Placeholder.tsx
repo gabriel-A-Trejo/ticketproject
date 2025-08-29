@@ -1,5 +1,5 @@
 import { LucideMessageSquareWarning } from 'lucide-react';
-import React, { forwardRef } from 'react';
+import React, { cloneElement } from 'react';
 
 type PlaceholderProps = {
   label: string;
@@ -7,21 +7,22 @@ type PlaceholderProps = {
   button?: React.ReactElement;
 };
 
-const Placeholder = forwardRef<HTMLDivElement, PlaceholderProps>(
-  ({ label, icon = <LucideMessageSquareWarning />, button = <div /> }, ref) => {
-    return (
-      <div
-        ref={ref}
-        className="flex-1 self-center flex flex-col items-center justify-center"
-      >
-        <div className="size-16">{icon}</div>
-        <h2 className="text-xl text-center">{label}</h2>
-        <div className="mt-4">{button}</div>
+const Placeholder = ({
+  label,
+  icon = <LucideMessageSquareWarning />,
+  button = <div />,
+}: PlaceholderProps) => {
+  return (
+    <div className="flex-1 self-center flex flex-col items-center justify-center gap-y-2">
+      <div className="size-16">
+        {cloneElement(icon, {
+          className: 'size-16',
+        } as unknown as React.ReactElement)}
       </div>
-    );
-  }
-);
-
-Placeholder.displayName = 'Placeholder';
+      <h2 className="text-xl text-center">{label}</h2>
+      <div>{button}</div>
+    </div>
+  );
+};
 
 export default Placeholder;
